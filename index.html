@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Jilu 💖</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: black;
+}
+
+/* 🌙 FIXED BACKGROUND with fallback */
+.bg {
+  position: fixed;
+  inset: 0;
+  /* Fallback: Dark gradient if image fails */
+  background: linear-gradient(to bottom, #0f0f23, #1a1a2e);
+  /* Primary: Moon image */
+  background-image: url('https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: brightness(0.55);
+  z-index: -2;
+}
+
+/* Overlay for content */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  transition: opacity 1s ease;
+}
+
+button {
+  padding: 14px 32px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #555;
+  color: white;
+}
+
+#no.shrink {
+  transform: scale(0.6);
+}
+
+#message {
+  margin-top: 30px;
+  font-size: 2em;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* 💖 GLOW TEXT */
+.glow {
+  animation: floatUp 10s ease forwards, glowPulse 4s ease-in-out infinite;
+  text-shadow:
+    0 0 12px #ff9acb,
+    0 0 24px #ff6fae,
+    0 0 40px #ff4d8d;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-60px); }
+}
+
+@keyframes glowPulse {
+  0%,100% {
+    text-shadow: 0 0 10px #ff9acb, 0 0 20px #ff6fae;
+  }
+  50% {
+    text-shadow: 0 0 18px #ffc1e3, 0 0 40px #ff6fae;
+  }
+}
+
+/* ❤️ Floating hearts */
+.hearts span {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: rise 9s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes rise {
+  from { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Shake only content */
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-48%, -50%); }
+  50% { transform: translate(-52%, -50%); }
+  75% { transform: translate(-48%, -50%); }
+  100% { transform: translate(-50%, -50%); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<div class="center" id="box">
+  <h1 id="question">Will you be my Valentine, Jilu? 💗</h1>
+
+  <div id="buttons">
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 😢</button>
+  </div>
+
+  <div id="message"></div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/02/23/audio_2c91c8e1a5.mp3">
+</audio>
+
+<script>
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const msg = document.getElementById("message");
+const hearts = document.getElementById("hearts");
+const music = document.getElementById("music");
+const box = document.getElementById("box");
+const question = document.getElementById("question");
+
+let noClicks = 0;
+
+no.onclick = () => {
+  noClicks++;
+  no.classList.add("shrink");
+  setTimeout(() => no.classList.remove("shrink"), 300);
+  if (noClicks >= 3) {
+    no.style.display = "none";
+    const resetBtn = document.createElement("button");
+    resetBtn.innerHTML = "Try Again? 😊";
+    resetBtn.onclick = () => location.reload();
+    document.getElementById("buttons").appendChild(resetBtn);
+  }
+};
+
+yes.onclick = () => {
+  // Fade out the question
+  question.style.opacity = 0;
+  setTimeout(() => question.style.display = "none", 1000);
+
+  // Play music with error handling
+  music.volume = 0.8;
+  music.play().catch(e => console.log("Audio failed to play:", e));
+
+  box.classList.add("shake");
+  setTimeout(() => box.classList.remove("shake"), 400);
+
+  document.getElementById("buttons").style.display = "none";
+
+  msg.style.opacity = 1;
+  msg.classList.add("glow");
+  msg.innerHTML = "💖 I LOVE YOU JILUU UMMMAHHH 💓";
+
+  startHearts();
+
+  setTimeout(() => {
+    msg.innerHTML += "<br><br>Under this same moon… always 🌙";
+  }, 4000);
+
+  // Added: More romantic text honoring Jesus, appearing after another 3 seconds
+  setTimeout(() => {
+    msg.innerHTML += "<br><br>May our love, guided by Jesus' light, shine forever in His grace.🫂 ";
+  }, 7000);
+};
+
+function startHearts() {
+  setInterval(() => {
+    const h = document.createElement("span");
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (7 + Math.random() * 4) + "s";
+    hearts.appendChild(h);
+    setTimeout(() => h.remove(), 11000);
+  }, 500);
+}
+</script>
+
+</body>
+</html>
