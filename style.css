@@ -1,0 +1,126 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: black;
+}
+
+/* 🌙 FIXED BACKGROUND with fallback */
+.bg {
+  position: fixed;
+  inset: 0;
+  /* Fallback: Dark gradient if image fails */
+  background: linear-gradient(to bottom, #0f0f23, #1a1a2e);
+  /* Primary: Moon image */
+  background-image: url('moon.jpg');  /* Assuming you uploaded moon.jpg to your repo */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: brightness(0.55);
+  z-index: -2;
+}
+
+/* Overlay for content */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  transition: opacity 1s ease;
+}
+
+button {
+  padding: 14px 32px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #555;
+  color: white;
+}
+
+#no.shrink {
+  transform: scale(0.6);
+}
+
+#message {
+  margin-top: 30px;
+  font-size: 2em;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* 💖 GLOW TEXT */
+.glow {
+  animation: floatUp 10s ease forwards, glowPulse 4s ease-in-out infinite;
+  text-shadow:
+    0 0 12px #ff9acb,
+    0 0 24px #ff6fae,
+    0 0 40px #ff4d8d;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-60px); }
+}
+
+@keyframes glowPulse {
+  0%,100% {
+    text-shadow: 0 0 10px #ff9acb, 0 0 20px #ff6fae;
+  }
+  50% {
+    text-shadow: 0 0 18px #ffc1e3, 0 0 40px #ff6fae;
+  }
+}
+
+/* ❤️ Floating hearts */
+.hearts span {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: rise 9s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes rise {
+  from { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Shake only content */
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-48%, -50%); }
+  50% { transform: translate(-52%, -50%); }
+  75% { transform: translate(-48%, -50%); }
+  100% { transform: translate(-50%, -50%); }
+}
